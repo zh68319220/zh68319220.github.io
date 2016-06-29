@@ -796,6 +796,12 @@ code {
   z-index: 0;
   border-color: transparent transparent #dbdee1 transparent;
 }
+.article-main {
+    margin: 40px 0;
+    max-height: 230px;
+    overflow: hidden;
+    border-bottom: 6px solid #888;
+}
 .article {
   margin: 40px 0;
 }
