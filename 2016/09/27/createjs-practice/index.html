@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>使用createjs完成一次H5开发 | YF&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="预加载1234567891011121314151617var preload = new createjs.LoadQueue(false);preload.addEventListener(&quot;fileload&quot;, handleFileComplete);preload.loadManifest([    &amp;#123; &quot;id&quot;: &quot;img1&quot;, &quot;src&quot;: &quot;img1url&quot; &amp;#125;,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用createjs完成一次H5开发">
+<meta property="og:url" content="http://yfzhang.cn/2016/09/27/createjs-practice/index.html">
+<meta property="og:site_name" content="YF's Blog">
+<meta property="og:description" content="预加载1234567891011121314151617var preload = new createjs.LoadQueue(false);preload.addEventListener(&quot;fileload&quot;, handleFileComplete);preload.loadManifest([    &amp;#123; &quot;id&quot;: &quot;img1&quot;, &quot;src&quot;: &quot;img1url&quot; &amp;#125;,">
+<meta property="og:image" content="http://yfzhang.cn/css/images/20160928.png">
+<meta property="og:updated_time" content="2016-09-28T01:55:14.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用createjs完成一次H5开发">
+<meta name="twitter:description" content="预加载1234567891011121314151617var preload = new createjs.LoadQueue(false);preload.addEventListener(&quot;fileload&quot;, handleFileComplete);preload.loadManifest([    &amp;#123; &quot;id&quot;: &quot;img1&quot;, &quot;src&quot;: &quot;img1url&quot; &amp;#125;,">
+<meta name="twitter:image" content="http://yfzhang.cn/css/images/20160928.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/fancybox/jquery.fancybox.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?7f27f1a03a091403d1ac4da57bdbc78a";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+</head>
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">YF&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">文章</a>
+                
+                    <a class="main-nav-link" href="/categories">案例</a>
+                
+                    <a class="main-nav-link" href="/about">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">文章</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">案例</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">YuFeng Zhang</h2>
+            <h3 id="title">Web F&amp;D Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Beijing, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zh68319220/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                4
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                3
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                        
+                        <td><a href="https://github.com/zh68319220/" target="_blank" title="github"><i class="fa fa-github"></i></a></td>
+                        
+                    
+                        
+                            <td><a href="tencent://message/?uin=420866750&Site=yfzhang.cn&Menu=yes" target="_blank" title="420866750"><i class="fa fa-qq"></i></a></td>
+                        
+                    
+                        
+                            <td><a href="/css/images/erweima.jpg" target="_blank" title="18716663191"><i class="fa fa-weixin"></i></a></td>
+                        
+                    
+                        
+                            <td><a href="Mailto:420866750@qq.com" target="_blank" title="420866750@qq.com"><i class="fa fa-envelope"></i></a></td>
+                        
+                    
+                        
+                        <td><a href="/" target="_blank" title="rss"><i class="fa fa-rss"></i></a></td>
+                        
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-createjs-practice" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            使用createjs完成一次H5开发
+        </h1>
+    
+
+                <div class="article-meta">
+                    
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/09/27/createjs-practice/">
+            <time datetime="2016-09-27T07:59:58.000Z" itemprop="datePublished">2016-09-27</time>
+        </a>
+    </div>
+
+
+                    
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/javascript/">javascript</a>
+    </div>
+
+                    
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/编程/">编程</a>
+    </div>
+
+                </div>
+            </header>
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> preload = <span class="keyword">new</span> createjs.LoadQueue(<span class="literal">false</span>);</div><div class="line">preload.addEventListener(<span class="string">"fileload"</span>, handleFileComplete);</div><div class="line">preload.loadManifest([</div><div class="line">    &#123; <span class="string">"id"</span>: <span class="string">"img1"</span>, <span class="string">"src"</span>: <span class="string">"img1url"</span> &#125;,</div><div class="line">    &#123; <span class="string">"id"</span>: <span class="string">"img2"</span>, <span class="string">"src"</span>: <span class="string">"img2url"</span> &#125;,</div><div class="line">    &#123; <span class="string">"id"</span>: <span class="string">"img3"</span>, <span class="string">"src"</span>: <span class="string">"img3url"</span> &#125;</div><div class="line">]);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleFileComplete</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(preload._numItems == preload._numItemsLoaded)&#123;</div><div class="line">      <span class="comment">// 隐藏加载层</span></div><div class="line">      $(<span class="string">'.loading'</span>).hide();</div><div class="line">      <span class="comment">// 初始化舞台</span></div><div class="line">      main = <span class="keyword">new</span> stageUtil();</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="comment">// 处理全部未加载成功</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="制作SpriteSheet"><a href="#制作SpriteSheet" class="headerlink" title="制作SpriteSheet"></a>制作SpriteSheet</h4><p>首先下载TexturePacker的破解版，把切好的图统一放在一个文件夹下，并选择easelJs的方式导出json和png文件：</p>
+<p><img src="/css/images/20160928.png" alt="TexturePacker设置导出"></p>
+<p>使用TexturePacker为我们生成的json文件(data)和png文件(1.png)来加入舞台之中：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"main"</span>&gt;</span><span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"cvs"</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"create.min.js的路径"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">	<span class="keyword">var</span> preload = <span class="keyword">new</span> createjs.LoadQueue(<span class="literal">false</span>),</div><div class="line">		canvas = <span class="built_in">document</span>.getElementById(<span class="string">'cvs'</span>),</div><div class="line">		stage = <span class="keyword">new</span> createjs.Stage(<span class="string">'cvs'</span>);</div><div class="line">	createjs.Touch.enable(stage);</div><div class="line">	createjs.Ticker.framerate = <span class="number">60</span>;</div><div class="line">	createjs.Ticker.on(<span class="string">"tick"</span>, stage);</div><div class="line"></div><div class="line">    preload.addEventListener(<span class="string">"fileload"</span>, handleFileComplete);</div><div class="line">    preload.loadManifest([</div><div class="line">        &#123; <span class="string">"id"</span>: <span class="string">"img1"</span>, <span class="string">"src"</span>: <span class="string">"1.png"</span> &#125;</div><div class="line">    ]);</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">handleFileComplete</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span>(preload._numItems == preload._numItemsLoaded)&#123;</div><div class="line">    	    <span class="keyword">var</span> data = &#123;</div><div class="line">				<span class="string">"images"</span>: [<span class="string">"1.png"</span>],</div><div class="line">				<span class="string">"frames"</span>: [</div><div class="line">				    [<span class="number">2</span>, <span class="number">1380</span>, <span class="number">1091</span>, <span class="number">573</span>],</div><div class="line">				    [<span class="number">2</span>, <span class="number">695</span>, <span class="number">1165</span>, <span class="number">683</span>],</div><div class="line">				    [<span class="number">2</span>, <span class="number">2</span>, <span class="number">1176</span>, <span class="number">691</span>]</div><div class="line">				],</div><div class="line">				<span class="string">"animations"</span>: &#123;</div><div class="line">			        <span class="string">"1b"</span>:[<span class="number">0</span>],</div><div class="line">			        <span class="string">"3707_a7098e26_e5ea_06ad_e6dd_49c956d23071_1"</span>:[<span class="number">1</span>],</div><div class="line">			        <span class="string">"mxg2"</span>:[<span class="number">2</span>]</div><div class="line">				&#125;</div><div class="line">			&#125;;</div><div class="line">		    drawSprite(<span class="number">0</span>, <span class="number">0</span>, data, <span class="string">"mxg2"</span>, <span class="number">0.1</span>, <span class="number">5</span>);</div><div class="line">		    drawSprite(<span class="number">0</span>, <span class="number">0</span>, data, <span class="string">"3707_a7098e26_e5ea_06ad_e6dd_49c956d23071_1"</span>, <span class="number">0.1</span>, <span class="number">5</span>);</div><div class="line">		    drawSprite(<span class="number">0</span>, <span class="number">0</span>, data, <span class="string">"1b"</span>, <span class="number">0.1</span>, <span class="number">5</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">drawSprite</span>(<span class="params">x, y, data, name, scale, rate</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> spriteSheet = <span class="keyword">new</span> createjs.SpriteSheet(data);</div><div class="line">	  <span class="keyword">var</span> animation = <span class="keyword">new</span> createjs.Sprite(spriteSheet, name);</div><div class="line">	  animation.x = x;</div><div class="line">  	animation.y = y;</div><div class="line">  	animation.scaleY = animation.scaleX = scale;</div><div class="line">  	animation.framerate = rate;</div><div class="line">  	<span class="keyword">var</span> child = stage.addChild(animation);</div><div class="line">  	stage.setChildIndex(child, <span class="number">999</span>);</div><div class="line">    &#125;;</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>由于图片资源已经预加载，所以重复<b>drawSprite</b>方法画出的图片的z-index关系完全取决于调用的先后顺序： “1b”在最上层， “3707_a7098e26_e5ea_06ad_e6dd_49c956d23071_1” 在中间，”mxg2”在最下层：</p>
+<p><img src="/css/images/201609282.png" alt="stage中的z-index关系"></p>
+<h4 id="几种createJs动画的实现方式"><a href="#几种createJs动画的实现方式" class="headerlink" title="几种createJs动画的实现方式"></a>几种createJs动画的实现方式</h4><h5 id="1-SpriteSheet"><a href="#1-SpriteSheet" class="headerlink" title="1.SpriteSheet"></a>1.SpriteSheet</h5><p>修改由TexturePacker生成的json数据中的”animations”属性，如：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"images"</span>: [<span class="string">"1.png"</span>],</div><div class="line">  <span class="attr">"frames"</span>: [</div><div class="line">      [<span class="number">2</span>, <span class="number">1380</span>, <span class="number">1091</span>, <span class="number">573</span>],</div><div class="line">      [<span class="number">2</span>, <span class="number">695</span>, <span class="number">1165</span>, <span class="number">683</span>],</div><div class="line">      [<span class="number">2</span>, <span class="number">2</span>, <span class="number">1176</span>, <span class="number">691</span>]</div><div class="line">  ],</div><div class="line">  <span class="attr">"animations"</span>: &#123;</div><div class="line">        <span class="attr">"a1"</span>:[<span class="number">0</span>, <span class="number">1</span>],</div><div class="line">        <span class="attr">"a2"</span>:[<span class="number">1</span>, <span class="number">2</span>],</div><div class="line">        <span class="attr">"a3"</span>:[<span class="number">2</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>“frames”数组的length代表了TexturePacker合成了多少张单图，而”animations”就配置了你需要组合动画的3种方式：a1,a2,a3。</p>
+<h5 id="2-TweenJs"><a href="#2-TweenJs" class="headerlink" title="2.TweenJs"></a>2.TweenJs</h5><p>createJs 细分为easelJs(基本库)、tweenJs(补间动画库)、preloadJs(预加载库)、soundJs(音频库)。各个库的使用方式官方都有详细介绍，tweenJs的用法例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">createjs.Tween.get(child,&#123;<span class="attr">loop</span>:<span class="literal">true</span>&#125;).to(&#123;<span class="attr">skewY</span>: <span class="number">720</span>, <span class="attr">alpha</span>: <span class="number">1</span>&#125;, <span class="number">1000</span>).wait(<span class="number">1000</span>);</div></pre></td></tr></table></figure></p>
+<h5 id="3-container"><a href="#3-container" class="headerlink" title="3.container"></a>3.container</h5><p>将动画资源加入container之中，通过container的动画来实现一些整体的动画效果。可避免重复对各个资源加动画：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 斜轮播</span></div><div class="line"><span class="keyword">var</span> contianer = <span class="keyword">new</span> createjs.Container();</div><div class="line">contianer.x = <span class="number">300</span>;</div><div class="line">contianer.y = <span class="number">300</span>;</div><div class="line">contianer.regX = <span class="number">230</span>;</div><div class="line">contianer.regY = <span class="number">400</span>;</div><div class="line">contianer.rotation = <span class="number">30</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= <span class="number">6</span>; i++) &#123;</div><div class="line">  <span class="keyword">if</span>( (i+<span class="number">1</span>)%<span class="number">2</span> == <span class="number">1</span> )&#123;</div><div class="line">    _this.drawBitmap(<span class="string">"http://xx.png"</span>, <span class="number">-300</span>, (<span class="number">150</span>*i + <span class="number">50</span>), <span class="number">1</span>, <span class="string">"1"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">child</span>) </span>&#123;</div><div class="line">      contianer.addChild(child);</div><div class="line">      createjs.Tween.get(child,&#123;<span class="attr">loop</span>:<span class="literal">false</span>&#125;).to(&#123; <span class="attr">x</span>: <span class="number">-60</span>&#125;, <span class="number">600</span>).call(cn1);</div><div class="line">      <span class="function"><span class="keyword">function</span> <span class="title">cn1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        child.x = <span class="number">-300</span>;</div><div class="line">        createjs.Tween.get(child,&#123;<span class="attr">loop</span>:<span class="literal">false</span>&#125;).to(&#123; <span class="attr">x</span>: <span class="number">-60</span>&#125;, <span class="number">600</span>).call(cn1);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    _this.drawBitmap(<span class="string">"http://xx2.png"</span>, <span class="number">-60</span>, (<span class="number">150</span>*i + <span class="number">50</span>), <span class="number">1</span>, <span class="string">"1"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">child</span>) </span>&#123;</div><div class="line">      contianer.addChild(child);</div><div class="line">      createjs.Tween.get(child,&#123;<span class="attr">loop</span>:<span class="literal">false</span>&#125;).to(&#123; <span class="attr">x</span>: <span class="number">-300</span>&#125;, <span class="number">600</span>).call(cn1);</div><div class="line">      <span class="function"><span class="keyword">function</span> <span class="title">cn1</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        child.x = <span class="number">-60</span>;</div><div class="line">        createjs.Tween.get(child,&#123;<span class="attr">loop</span>:<span class="literal">false</span>&#125;).to(&#123; <span class="attr">x</span>: <span class="number">-300</span>&#125;, <span class="number">600</span>).call(cn1);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">_this.stage.addChild(contianer);</div><div class="line">_this.stage.setChildIndex(contianer, <span class="number">1</span>);</div></pre></td></tr></table></figure></p>
+<h4 id="点击域"><a href="#点击域" class="headerlink" title="点击域"></a>点击域</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 画点击域</span></div><div class="line">stageUtil.prototype.drawHitarea = <span class="function"><span class="keyword">function</span>(<span class="params">event, conf, fn</span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> _this = <span class="keyword">this</span>;</div><div class="line">	<span class="keyword">var</span> hit = <span class="keyword">new</span> createjs.Shape(<span class="keyword">new</span> createjs.Graphics().f(<span class="string">"rgba(0,0,0,0.01)"</span>).r(conf.x,conf.y,conf.w,conf.h));</div><div class="line">	_this.stage.addChild(hit);</div><div class="line">	_this.stage.setChildIndex(hit, <span class="number">99</span>);</div><div class="line">	_this.stage.update();</div><div class="line">	hit.addEventListener(event, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">		fn(e);</div><div class="line">	&#125;, <span class="literal">false</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yfzhang.cn/2016/09/27/createjs-practice/" data-id="citm9fm3n0000hgt2wedbkp68" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yfzhang.cn/2016/09/27/createjs-practice/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yfzhang.cn/2016/09/27/createjs-practice/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/09/27/jquery-source/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">分析jQuery源码</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/09/27/createjs-practice/" data-title="使用createjs完成一次H5开发" data-url="http://yfzhang.cn/2016/09/27/createjs-practice/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/27/createjs-practice/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/20160928.png)" alt="使用createjs完成一次H5开发" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/javascript/">javascript</a></p>
+                            <p class="item-title"><a href="/2016/09/27/createjs-practice/" class="title">使用createjs完成一次H5开发</a></p>
+                            <p class="item-date"><time datetime="2016-09-27T07:59:58.000Z" itemprop="datePublished">2016-09-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/27/jquery-source/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/javascript/">javascript</a></p>
+                            <p class="item-title"><a href="/2016/09/27/jquery-source/" class="title">分析jQuery源码</a></p>
+                            <p class="item-date"><time datetime="2016-09-27T06:18:19.000Z" itemprop="datePublished">2016-09-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/06/08/font-spider/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/css/images/20160608.png)" alt="使用font-spider在H5中嵌入自定义字体" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/css/">css</a></p>
+                            <p class="item-title"><a href="/2016/06/08/font-spider/" class="title">使用font-spider在H5中嵌入自定义字体</a></p>
+                            <p class="item-date"><time datetime="2016-06-08T09:41:58.000Z" itemprop="datePublished">2016-06-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/06/01/hello-world/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/web/">web</a></p>
+                            <p class="item-title"><a href="/2016/06/01/hello-world/" class="title">First Blood.</a></p>
+                            <p class="item-date"><time datetime="2016-06-01T09:41:58.000Z" itemprop="datePublished">2016-06-01</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/web/">web</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS3/">CSS3</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/建站/">建站</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程/">编程</a><span class="tag-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/CSS3/" style="font-size: 10px;">CSS3</a> <a href="/tags/建站/" style="font-size: 10px;">建站</a> <a href="/tags/编程/" style="font-size: 20px;">编程</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 YuFeng Zhang<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'yfzhang'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/vendor/fancybox/jquery.fancybox.pack.js"></script>
+    
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
