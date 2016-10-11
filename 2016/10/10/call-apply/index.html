@@ -3,15 +3,18 @@
 <head>
     <meta charset="utf-8">
     
-    <title>about | YF&#39;s Blog</title>
+    <title>如何理解javascript中的call和apply | YF&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yfzhang.cn/about/index.html">
+    <meta name="description" content="1234567891011&amp;lt;input type=&quot;text&quot; id=&quot;myText&quot;   value=&quot;input text&quot;&amp;gt;&amp;lt;script&amp;gt;    function Obj()&amp;#123;this.value=&quot;对象&quot;;&amp;#125;    var value=&quot;global 变量&quot;;    function Fun1()&amp;#123;alert(this.value);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何理解javascript中的call和apply">
+<meta property="og:url" content="http://yfzhang.cn/2016/10/10/call-apply/index.html">
 <meta property="og:site_name" content="YF's Blog">
-<meta property="og:updated_time" content="2016-09-27T05:55:18.826Z">
+<meta property="og:description" content="1234567891011&amp;lt;input type=&quot;text&quot; id=&quot;myText&quot;   value=&quot;input text&quot;&amp;gt;&amp;lt;script&amp;gt;    function Obj()&amp;#123;this.value=&quot;对象&quot;;&amp;#125;    var value=&quot;global 变量&quot;;    function Fun1()&amp;#123;alert(this.value);">
+<meta property="og:updated_time" content="2016-10-11T10:04:48.237Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="如何理解javascript中的call和apply">
+<meta name="twitter:description" content="1234567891011&amp;lt;input type=&quot;text&quot; id=&quot;myText&quot;   value=&quot;input text&quot;&amp;gt;&amp;lt;script&amp;gt;    function Obj()&amp;#123;this.value=&quot;对象&quot;;&amp;#125;    var value=&quot;global 变量&quot;;    function Fun1()&amp;#123;alert(this.value);">
     
 
     
@@ -187,7 +190,7 @@ var _hmt = _hmt || [];
 </aside>
 
             
-            <section id="main"><article id="page-undefined" class="article article-type-page" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-call-apply" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -196,7 +199,7 @@ var _hmt = _hmt || [];
                 
     
         <h1 class="article-title" itemprop="name">
-            about
+            如何理解javascript中的call和apply
         </h1>
     
 
@@ -204,21 +207,42 @@ var _hmt = _hmt || [];
                     
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/about/index.html">
-            <time datetime="2016-06-01T08:13:44.000Z" itemprop="datePublished">2016-06-01</time>
+        <a href="/2016/10/10/call-apply/">
+            <time datetime="2016-10-10T06:03:15.000Z" itemprop="datePublished">2016-10-10</time>
         </a>
     </div>
 
 
                     
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/javascript/">javascript</a>
+    </div>
+
                     
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/编程/">编程</a>
+    </div>
+
                 </div>
             </header>
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            
+            <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"myText"</span>   <span class="attr">value</span>=<span class="string">"input text"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></div><div class="line">    function Obj()&#123;this.value="对象";&#125;</div><div class="line">    var value="global 变量";</div><div class="line">    function Fun1()&#123;alert(this.value);&#125;</div><div class="line"></div><div class="line">    window.Fun1();   //global 变量</div><div class="line">    Fun1.call(window);  //global 变量</div><div class="line">    Fun1.call(document.getElementById('myText'));  //input text</div><div class="line">    Fun1.call(new Obj());   //对象</div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>this指向了call方法的第一个参数，分别是<strong>window</strong>、<strong>input text</strong>、<strong>对象</strong></p>
+<p>所以当运行下面代码的时候第一个alert出来的值是<strong>func</strong>而不是<strong>myfunc</strong>，因为<code>this取决于call的第一个参数</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> func=<span class="keyword">new</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="keyword">this</span>.a=<span class="string">"func"</span>&#125;</div><div class="line"><span class="keyword">var</span> myfunc=<span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> a=<span class="string">"myfunc"</span>;</div><div class="line">  alert(<span class="keyword">this</span>.a);</div><div class="line">  alert(x);</div><div class="line">&#125;</div><div class="line">myfunc.call(func,<span class="string">"var"</span>);</div></pre></td></tr></table></figure></p>
+<p>apply 与 call 的区别在于<strong> apply的第二个参数必须传入一个数组，并把这个数组中的n个元素当作n的参数使用，然而call即使传入了一个数组，也只会当成一个参数处理。所以call(obj, arg1, arg2) 与 apply(obj, [arg1, arg2]) 的作用一样</strong>。</p>
+<p>由于它们的特性，用来做 <code> 继承 </code> 就很合适。<br>两个类：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> sex = <span class="number">0</span>;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">　<span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"person say"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name,age,height</span>) </span>&#123;</div><div class="line">　　Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">　　<span class="comment">//Person.call(this,name,age,height);   //call方法的传参方式;</span></div><div class="line">   <span class="built_in">console</span>.log(<span class="keyword">this</span>.sex);</div><div class="line">　　<span class="keyword">this</span>.height = height;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> student = <span class="keyword">new</span> Student(<span class="string">"chams"</span>,<span class="number">22</span>,<span class="string">"173"</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="string">"name:"</span> + student.name + <span class="string">"  age:"</span> + student.age + <span class="string">"  height:"</span> + student.height);</div><div class="line"><span class="built_in">console</span>.log(student.say);</div></pre></td></tr></table></figure></p>
+<p>可见Student类的构造方法中利用call和apply继承了Person中的成员变量和方法，但是<strong> Person类中的私有成员变量sex和原型上的say方法却没有被继承 </strong></p>
+<p>经过改进后可变为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> sex = <span class="number">0</span>;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">　<span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"person say"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name,age,height</span>) </span>&#123;</div><div class="line">　　Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">　　<span class="comment">//Person.call(this,name,age,height);   //call方法的传参方式;</span></div><div class="line">　　<span class="keyword">this</span>.height = height;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Student.prototype = Person.prototype;</div><div class="line"></div><div class="line"><span class="keyword">var</span> student = <span class="keyword">new</span> Student(<span class="string">"chams"</span>,<span class="number">22</span>,<span class="string">"173"</span>);</div><div class="line"></div><div class="line">Student.prototype.a = <span class="number">1</span>;</div><div class="line"><span class="built_in">console</span>.log(Person.prototype.a);</div></pre></td></tr></table></figure>
+<p>现在父类的成员变量和其原型上的变量都继承过来了，但是当我 <strong> 改变子类原型的变量时，同样会影响到父类，这违背了继承的规则，也会影响到父类 </strong>。</p>
+<p>解决方法是加入一个中间变量类:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> sex = <span class="number">0</span>;</div><div class="line">  <span class="keyword">this</span>.name = name;</div><div class="line">　<span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"person say"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name,age,height</span>) </span>&#123;</div><div class="line">　　Person.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);</div><div class="line">　　<span class="comment">//Person.call(this,name,age,height);   //call方法的传参方式;</span></div><div class="line">　　<span class="keyword">this</span>.height = height;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> F = <span class="keyword">new</span> <span class="built_in">Function</span>()&#123;&#125;</div><div class="line">F.prototype = Person.prototype;</div><div class="line">Student.prototype = <span class="keyword">new</span> F();</div><div class="line"></div><div class="line"><span class="keyword">var</span> student = <span class="keyword">new</span> Student(<span class="string">"chams"</span>,<span class="number">22</span>,<span class="string">"173"</span>);</div><div class="line"></div><div class="line">Student.prototype.a = <span class="number">1</span>;</div><div class="line"><span class="built_in">console</span>.log(Person.prototype.a);</div></pre></td></tr></table></figure>
+
         
         </div>
         <footer class="article-footer">
@@ -228,7 +252,7 @@ var _hmt = _hmt || [];
 
 </div>
 
-    <a data-url="http://yfzhang.cn/about/index.html" data-id="ciu574cx3000sb0t2h4o52vjv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yfzhang.cn/2016/10/10/call-apply/" data-id="ciu574cul0000b0t2ya8mk44a" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -296,13 +320,23 @@ var _hmt = _hmt || [];
 
             
     
-        <a href="http://yfzhang.cn/about/index.html#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yfzhang.cn/about/index.html">评论</a>
+        <a href="http://yfzhang.cn/2016/10/10/call-apply/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://yfzhang.cn/2016/10/10/call-apply/">评论</a>
     
 
         </footer>
     </div>
     
         
+<nav id="article-nav">
+    
+    
+        <a href="/2016/10/09/create-a-js-library/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何使用javascript创造一个类库</div>
+        </a>
+    
+</nav>
+
 
     
 </article>
@@ -312,7 +346,7 @@ var _hmt = _hmt || [];
     <section id="comments">
     
         
-    <div class="ds-thread" data-thread-key="about/index.html" data-title="about" data-url="http://yfzhang.cn/about/index.html"></div>
+    <div class="ds-thread" data-thread-key="2016/10/10/call-apply/" data-title="如何理解javascript中的call和apply" data-url="http://yfzhang.cn/2016/10/10/call-apply/"></div>
     <style>
         #ds-thread #ds-reset .ds-textarea-wrapper {
             background: none;
